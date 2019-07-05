@@ -1,0 +1,20 @@
+<?php
+	return [
+	    'welcome' => 'Welcome to Website!',
+	    'techearMangement' => 'Teacher Managerment',
+	    'studentMangement' => 'Student Mangement',
+	    'courseMangement' => 'Course Mangement',
+	    'MyProfile' => ' My Profile',
+	    'student' => 'Student',
+	    'teacher' => 'Teacher',
+	    'course' => 'Course',
+	    'general' => 'General',
+	    'management' => 'MANAGEMENT',
+	    'MainDashboard' => 'Main Dashboard',
+	    'teacherList'=> 'List Teacher',
+	    'setting' => 'Setting',
+	    'General' => 'General',
+	    'logout' =>'Logout',
+	    'StatsTab' => 'Stats Tab Content',
+	    'successLogin' => 'You Are Success Login',
+	];
