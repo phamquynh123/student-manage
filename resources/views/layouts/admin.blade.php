@@ -11,6 +11,7 @@
 
     <title> SuperAdmin </title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
   
     <!-- Bootstrap 4.0-->
     <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/bootstrap.min.css') }}">
@@ -31,6 +32,7 @@
     <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/master_style_dark.css') }}">
     {{-- datatable  --}}
     <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/adminTemplate/Css/toastr.min.css') }}">
     @routes()
 </head>
 <body class="hold-transition skin-info fixed sidebar-mini">
@@ -301,7 +303,7 @@
 
     <!-- jQuery 3 -->
     <script src="{{ asset('bower_components/adminTemplate/Js/jquery-3.3.1.min.js') }}"></script>
-   <script src="{{ asset('/js/app.js') }}"></script>
+
     <!-- popper -->
     <script src="{{ asset('bower_components/adminTemplate/Js/popper.min.js') }}"></script>
 
@@ -321,8 +323,13 @@
     <script src="{{ asset('bower_components/adminTemplate/Js/demo.js') }}"></script>
     {{-- link datatable --}}
     <script src="{{ asset('bower_components/adminTemplate/Js/jquery.dataTables.min.js') }}"></script>
+    {{-- validation  --}}
+    <script src="{{ asset('bower_components/adminTemplate/Js/validation.js') }}"></script>
+    <script src="{{ asset('bower_components/adminTemplate/Js/form-validation.js') }}"></script>
+    <script src="{{ asset('bower_components/adminTemplate/Js/toastr.min.js') }}"></script>
+    <script src="{{ asset('bower_components/adminTemplate/Js/ckeditor.js') }}"></script>
     {{-- link js nè  --}}
-    <script src="{{ asset('js/admin.js')}}"></script>
+    <script src="{{ asset('js/admin.js') }}"></script>
     @yield('ajax')
 
    
