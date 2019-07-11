@@ -14,3 +14,32 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => 'locale'], function() {
+    Route::group(['middleware' => 'auth'], function() {
+        Route::get('change-language/{language}', 'LanguageController@changeLanguage')->name('user.change-language');
+        Route::get('/dashboard', 'HomeController@index')->name('home');
+        Route::get('/profile', 'UserController@profile')->name('profile');
+        Route::post('/editprofile', 'UserController@editprofile')->name('editprofile');
+
+        Route::prefix('admin')->group(function () {
+            
+            Route::get('/datatable/{id}', 'UserController@UserDatatable')->name('datatables.user');
+            Route::post('/add/{id}', 'UserController@add')->name('addUser');
+            Route::post('/changestatus', 'UserController@changestatus')->name('changestatus');
+            Route::post('/changePassword', 'UserController@changePassword')->name('changePassword');
+
+            Route::prefix('teachers')->group(function () {
+                Route::get('/', 'UserController@teacher');
+            });
+
+            Route::prefix('/students')->group(function() {
+                Route::get('/', 'UserController@student');
+            });
+        });
+    });
+});

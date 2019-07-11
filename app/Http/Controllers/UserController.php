@@ -6,9 +6,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUser;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -100,21 +102,19 @@ class UserController extends Controller
         return view('admins/teachers');
     }
 
-    public function teacherDatatable()
+    public function UserDatatable($id)
     {
-        $users = User::where('role_id', config('messages.roleTeacher'));
+        $users = User::where('role_id', $id);
 
         return Datatables::of($users)
             ->addColumn('action', function ($user) {
-                return '<a href="#edit-' . $user->id . '" class="btn btn-sm btn-primary edit-user" data-id="' . $user->id . '"><i class="fa fa-edit"></i></a>
-                    <a href="#show-' . $user->id . '" class="btn btn-sm btn-warning edit-user" data-id="' . $user->id . '"><i class="fa fa-eye"></i></a>
-                    <a href="#delete-' . $user->id . '" class="btn btn-sm btn-danger edit-user" data-id="' . $user->id . '"><i class="fa fa-eye"></i></a>';
+                return '<a href="#show-' . $user->id . '" class="btn btn-sm btn-warning show-user" data-id="' . $user->id . '"><i class="fa fa-eye"></i></a>';
             })
             ->editColumn('avatar', function($user) {
                 if ($user->avatar == null) {
                     $image = asset('') . config('messages.linkdefaul');
                 } else {
-                    $image = $user->avatar;
+                    $image = asset('') . $user->avatar;
                 }
 
                 return '<img class="img-avatar" src=" ' . $image . ' "/>';
@@ -140,15 +140,19 @@ class UserController extends Controller
             ->make(true);
     }
 
-    public function addteacher(StoreUser $request)
-    {
-        $data = $request->all();
-        $data['role_id'] = config('messages.roleTeacher');
-        $data['status'] = config('messages.active');
-        $data['password'] = Hash::make( config('messages.passDefaul') );
-        $user = $this->userRepository->create($data);
+    public function add(StoreUser $request, $role_id)
+    {   
+        if (Auth::user()->role_id == config('messages.roleAdmin')) {
+            $data = $request->all();
+            $data['role_id'] = $role_id;
+            $data['status'] = config('messages.active');
+            $data['password'] = Hash::make( config('messages.passDefaul') );
+            $user = $this->userRepository->create($data);
 
-        return response()->json([ 'error' => false, 'success' => trans('message.createSuccess') ]); 
+            return response()->json([ 'error' => false, 'success' => trans('message.createSuccess') ]);
+        } else {
+            return response()->json([ 'error' => true, 'success' => trans('message.permission') ]);
+        }
     }
 
     public function changestatus(Request $request)
@@ -166,5 +170,43 @@ class UserController extends Controller
         } else {
             return response()->json([ 'error' => true, 'success' => trans('message.permission') ]);
         }
+    }
+
+    public function profile()
+    {
+        return view('general/profile');
+    }
+
+    public function editprofile(Request $request)
+    {
+        $data = $request->all();
+        if ($request->hasFile('file')) {
+            Storage::delete(Auth::user()->avatar);
+            $request->file->storeAs( config('messages.saveImg') . time() . request()->file->getClientOriginalName());
+            $path = time() . request()->file->getClientOriginalName();
+            $data['avatar'] = $path;
+        }
+        $data = $this->userRepository->update($data['id'], $data);
+
+        return response()->json(['success' => trans('meassge.changeProfileSuccess'), 'error' => false]);
+    }
+
+    public function changePassword(ChangePasswordRequest $request){
+        $data = $request->all();
+        $data['id'] = Auth::user()->id;
+        $oldpass = Auth::user()->password;
+        if (Hash::check($data['pass'], $oldpass)) {
+            $data['password'] = Hash::make($data['repass']);
+            $data = $this->userRepository->update($data['id'], $data);
+
+            return response()->json(['success' => trans('message.changePasswordSuccess'), 'error' => false]);
+        } else {
+            return response()->json(['success' => trans('message.repassnotmatch'), 'error' => true]);
+        }
+    }
+
+    public function student()
+    {
+        return view('admins/student');
     }
 }
