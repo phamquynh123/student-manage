@@ -5,10 +5,10 @@ $(function() {
         }
     });
 
-    $('#teacher-table').DataTable({
+    $('#user-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: $('#teacher-table').data('id'),
+        ajax: $('#user-table').attr('data-url'),
         columns: [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
@@ -20,22 +20,27 @@ $(function() {
         ],
     });
 });
-$('.submit-add-teacher').on('click', function(e) {
+
+$('.submit-add').on('click', function(e) {
     e.preventDefault();
     var formData1 = new FormData();
     formData1.append('name', $('#add-name').val());
     formData1.append('email', $('#add-email').val());
     $.ajax({
         type: 'post', 
-        url: $('#addTeacher').data('url'),
+        url: $('#addUser').attr('data-url'),
         processData: false,
         contentType: false,
         data:formData1,
         dataType: 'JSON', 
         success: function (response) {
-            toastr.success(response.success);
-            $('#teacher-table').DataTable().ajax.reload(null, false);
-            $('#addNewTeacher').modal('hide');
+            $('#user-table').DataTable().ajax.reload(null, false);
+            $('#addNewUser').modal('hide');
+            if (response.error == true) {
+                toastr.error(response.success);
+            } else {
+                toastr.success(response.success);
+            }
         },  
         error:function(jqXHR, textStatus, errorThrown){
             if (jqXHR.responseJSON.errors.name !== undefined){
@@ -54,13 +59,13 @@ $(document).on('click', '.switch-indicator', function(e){
     formData.append('status', $(this).attr('data-status'))
     $.ajax({
         type: 'post', 
-        url: $('#teacher-table').attr('data-status'),
+        url: $('#user-table').attr('data-status'),
         processData: false,
         contentType: false,
         data:formData,
         dataType: 'JSON', 
         success: function (response) {
-            $('#teacher-table').DataTable().ajax.reload(null, false);
+            $('#user-table').DataTable().ajax.reload(null, false);
             if (response.error == true) {
                 toastr.error(response.success);
             } else {

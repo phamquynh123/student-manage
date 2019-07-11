@@ -74,13 +74,13 @@
                         <!-- User Account-->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                              <img src="{{ Auth::user()->avatar }}" class="user-image rounded-circle" alt="User Image">
+                              <img src="{{ asset(Auth::user()->avatar) }}" class="user-image rounded-circle" alt="User Image">
                             </a>
                             <ul class="dropdown-menu animated flipInY">
                                 <!-- User image -->
-                                <li class="user-header bg-img"  data-overlay="3">
+                                <li class="user-header bg-img" data-overlay="3">
                                     <div class="flexbox align-self-center">                     
-                                        <img src=" {{ Auth::user()->avatar }}" class="float-left rounded-circle" alt="User Image">                   
+                                        <img src="{{ asset(Auth::user()->avatar) }}" class="float-left rounded-circle" alt="User Image">                   
                                         <h4 class="user-name align-self-center">
                                             <span>{{ Auth::user()->name }}</span>
                                             <small>{{ Auth::user()->email }}</small>
@@ -89,7 +89,7 @@
                                 </li>
                                 <!-- Menu Body -->
                                 <li class="user-body" style="background-color: #313640">
-                                    <a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-person"></i>{{ trans('message.MyProfile') }}</a>
+                                    <a class="dropdown-item" href="{{ route('profile') }}"><i class="ion ion-person"></i>{{ trans('message.MyProfile') }}</a>
                                     <a class="dropdown-item logout" href="{{ route('logout') }}">
                                         {{ __('Logout') }}
                                     </a>
@@ -169,8 +169,8 @@
                 <!-- sidebar menu-->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="user-profile treeview">
-                        <a href="index.html">
-                            <img src=" {{ Auth::user()->avatar }}">
+                        <a href="{{ route('profile') }}">
+                            <img src=" {{ asset(Auth::user()->avatar) }}">
                             <span>
                                 <span class="d-block font-weight-600 font-size-16">{{ Auth::user()->name }}</span>
                                 <span class="email-id">{{ Auth::user()->email }}</span>
@@ -180,7 +180,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="javascript:void()"><i class="fa fa-user mr-5"></i>{{ trans('message.MyProfile') }} </a></li>
+                            <li><a href="{{ route('profile') }}"><i class="fa fa-user mr-5"></i>{{ trans('message.MyProfile') }} </a></li>
                             <li><a href="javascript:void()"><i class="fa fa-power-off mr-5"></i>{{ trans('message.logout') }}</a></li>
                         </ul>
                     </li>
@@ -188,7 +188,7 @@
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-tachometer" aria-hidden="true"></i>
-                            <span>{{ trans('message.MainDashboard')}}</span>
+                            <span>{{ trans('message.MainDashboard') }}</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-right pull-right"></i>
                             </span>
@@ -204,7 +204,7 @@
                     </li>
 
                     <li class="treeview">
-                        <a href="{{ asset('/admin/teachers')}}">
+                        <a href="{{ asset('/admin/teachers') }}">
                             <i class="fa fa-address-book-o" aria-hidden="true"></i>
                             <span> {{ trans('message.techearMangement') }}</span>
                             <span class="pull-right-container">
@@ -213,31 +213,52 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="{{ asset('/admin/teachers')}}">
+                                <a href="{{ asset('/admin/teachers') }}">
                                      <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                                    {{ trans('message.teacherList')}}
+                                    {{ trans('message.teacherList') }}
                                 </a>
                             </li>
                         </ul>
                     </li>  
 
                     <li class="treeview">
-                        <a href=" {{ asset('/admin/students')}} ">
+                        <a href=" {{ asset('/admin/students') }} ">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <span> {{ trans('message.studentMangement') }}</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-right pull-right"></i>
+                            </span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="{{ asset('/admin/students') }}">
+                                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                                    {{ trans('message.studentList') }}
+                                </a>
+                            </li>
+                        </ul>
                     </li> 
 
-                     <li class="treeview">
-                        <a href=" {{ asset('/admin/courses')}} ">
+                    <li class="treeview">
+                        <a href=" {{ asset('/admin/courses') }} ">
                             <i class="fa fa-building" aria-hidden="true"></i>
                             <span> {{ trans('message.courseMangement') }}</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-right pull-right"></i>
+                            </span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="{{ asset('/admin/course') }}">
+                                    <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                                    {{ trans('message.courseList') }}
+                                </a>
+                            </li>
+                        </ul>
                     </li> 
                 </ul>
             </section>
         </aside>
-
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -285,7 +306,7 @@
                     </form>
                 </div>
                 <div class="tab-pane" id="control-sidebar-logout-tab">
-                    <p>{{ trans('message.setting')}}</p>
+                    <p>{{ trans('message.setting') }}</p>
                     <a class="dropdown-item logout" href="{{ route('logout') }}">
                         {{ __('Logout') }}
                     </a>
@@ -332,6 +353,5 @@
     <script src="{{ asset('js/admin.js') }}"></script>
     @yield('ajax')
 
-   
 </body>
 </html>

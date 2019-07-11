@@ -1,0 +1,14 @@
+{
+  "name": "project1",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "https://github.com/phamquynh123/student-manage",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
