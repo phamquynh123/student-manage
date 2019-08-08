@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exercise extends Model
 {
-    protected $table = 'exercies';
+    protected $table = 'exercises';
     protected $fillable = [
-    	'title',
-    	'slug',
-    	'content',
+        'title',
+        'slug',
+        'content',
+        'subject_id',
     ];
 }

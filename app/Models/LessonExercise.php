@@ -8,13 +8,13 @@ class LessonExercise extends Model
 {
     protected $table = 'lesson_exercise';
     protected $fillable = [
-    	'lesson_id',
-    	'exercise_id',
-    	'deadline',
+        'lesson_id',
+        'exercise_id',
+        'deadline',
     ];
 
     public function exercise()
     {
-    	return $this->hasMany('App\Models\Exercise', 'exercise_id');
+        return $this->hasMany('App\Models\Exercise', 'id', 'exercise_id');
     }
 }

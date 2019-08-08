@@ -8,9 +8,9 @@ class QuestionDetail extends Model
 {
     protected $table = 'question_details';
     protected $fillable = [
-    	'question_id',
-    	'title',
-    	'content',
-    	'status',
+        'question_id',
+        'title',
+        'content',
+        'status',
     ];
 }

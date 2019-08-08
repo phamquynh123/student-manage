@@ -8,18 +8,18 @@ class Role extends Model
 {
     protected $table = 'roles';
     protected $fillable = [
-    	'name',
-    	'display_name',
-    	'description',
+        'name',
+        'display_name',
+        'description',
     ];
 
     public function permissions()
     {
-        return $this->belongsToMany('App\models\Permission', 'permission_role');
+        return $this->belongsToMany('App\Models\Permission', 'permission_role');
     }
 
     public function permission_role()
     {
-    	return $this->belongsTo('App\models\PermissionRole', 'role_id');
-	}
+        return $this->belongsTo('App\Models\PermissionRole', 'role_id');
+    }
 }

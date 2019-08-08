@@ -8,12 +8,12 @@ class LessonDocument extends Model
 {
     protected $table = 'lesson_document';
     protected $fillable = [
-    	'lesson_id',
-    	'document_id',
+        'lesson_id',
+        'document_id',
     ];
 
     public function document()
     {
-    	return $this->hasMany('App\Models\Document', 'document_id');
+        return $this->hasMany('App\Models\Document', 'id', 'document_id');
     }
 }
